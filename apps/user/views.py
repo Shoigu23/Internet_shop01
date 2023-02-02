@@ -1,16 +1,19 @@
 from django.shortcuts import render
-from apps.user.forms import UserRegistrationForm, UserLoginForm
+from apps.user.forms import UserRegistrationForm, UserLoginForm, UserProfileForm
 from django.http import HttpResponseRedirect
 from django.contrib import auth, messages
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+
 def registration(request):
     if request.method == 'POST':
         form = UserRegistrationForm(data = request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Вы успешно зарегестрировались на нашем сайте')
-        return HttpResponseRedirect('/')
+            return HttpResponseRedirect(reverse('login'))
     else:
         form = UserRegistrationForm()
     return render (request, 'registration.html', {'form':form})
@@ -26,12 +29,28 @@ def login(request):
             user = auth.authenticate(username = username, password = password)
             if user:
                 auth.login(request, user)
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect(reverse('profile'))
     else:
         form = UserLoginForm()
     return render(request, 'login.html', {'form':form})
+
 
 def logout(request):
     auth.logout(request)
 
     return HttpResponseRedirect('/')
+
+@login_required(login_url='login')
+def profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(data=request.POST, instance = request.user, files = request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('profile'))
+        else:
+            print(form.errors)
+    else:
+        form = UserProfileForm(instance = request.user)
+    return render(request, 'profile.html', {'form':form})
+
+

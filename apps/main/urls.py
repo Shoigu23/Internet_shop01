@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.urls import path
 
-from apps.main.views import main, info, add_to_cart, cart, remove
+from apps.main.views import main, info, add_to_cart, cart, remove, search, tel
 
 urlpatterns = [
     path('', main, name='main'),
@@ -23,4 +23,6 @@ urlpatterns = [
     path('add_to_cart/<int:id>', add_to_cart, name='add_to_cart'),
     path('cart/', cart, name='cart'),
     path('remove/<int:id>', remove, name='remove'),
+    path('search/', search, name='search'),
+    path('tel/', tel, name='tel'),
 ]

@@ -6,8 +6,14 @@
 </div>
 <div class="box bg-img">
   <div class="content">
-
+    {% for i in messages %}
+    <h1>{{i}}</h1>
+  
+    {% endfor %}
+  
     <h2>Sign<span> In</span></h2>
+
+      <h4>{{ form.non_field_errors }}</h4>
 
     <form action="{% url 'login' %}" method="post">
       {% csrf_token %}
@@ -23,7 +29,7 @@
 
 
 
-    <p class="new-account">Not a member? <a href="{% url 'registration'%}">Sign Up now!</a></p>
+    <p class="new-account">Not a member? <a href="{% url 'registration' %}">Sign Up now!</a></p>
 
     <br>
 

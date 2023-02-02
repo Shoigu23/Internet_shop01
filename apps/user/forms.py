@@ -19,3 +19,13 @@ class UserLoginForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ('username', 'password')
+
+class UserProfileForm(UserChangeForm):
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Введите имя'}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Введите фамилию'}))
+    image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control'}), required=False)
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Введите имя пользователя', 'readonly':True}))
+    email = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'email', 'placeholder': 'Введите Email', 'readonly':True}))
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'image', 'username', 'email')

@@ -7,7 +7,17 @@
 <div class="box bg-img">
   <div class="content">
 
+
+    
+
     <h2>Sign<span> Up</span></h2>
+    {% if form.errors %}
+      {% for i in form %}
+        {% for error in i.errors %}
+          <h4>{{ error|escape }}</h4>
+        {% endfor %}
+      {% endfor %}
+    {% endif %}
 <form action="{% url 'registration'%}" method="POST">
   {% csrf_token %}
     <div class="forms">
