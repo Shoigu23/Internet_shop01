@@ -53,3 +53,11 @@ def search(request):
 def tel(request):
     tel = Product.objects.filter(category=1)
     return render(request, 'tel.html', {'tel':tel})
+    
+def nout(request):
+    nout = Product.objects.filter(category=2)
+    return render(request, 'nout.html', {'nout':nout})
+
+def planshety(request):
+    planshety = Product.objects.filter(category=3)
+    return render(request, 'planshety.html', {'planshety':planshety})
